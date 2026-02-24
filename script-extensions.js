@@ -74,3 +74,66 @@ function editRecord(type, id) {
     }
 }
 window.editRecord = editRecord;
+
+// --- AUTHENTICATION LOGIC ---
+
+window.loginGoogle = function () {
+    window.signInWithPopup(window.auth, window.googleProvider)
+        .then((result) => {
+            console.log("Logged in with Google:", result.user.email);
+            // onAuthStateChanged handles UI update
+        })
+        .catch((error) => {
+            document.getElementById('login-error').innerText = error.message;
+            document.getElementById('login-error').style.display = 'block';
+        });
+};
+
+window.loginEmailPassword = function () {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-password').value;
+
+    if (!email || !pass) {
+        document.getElementById('login-error').innerText = "Please enter email and password";
+        document.getElementById('login-error').style.display = 'block';
+        return;
+    }
+
+    window.signInWithEmailAndPassword(window.auth, email, pass)
+        .then((userCredential) => {
+            console.log("Logged in:", userCredential.user.email);
+            // onAuthStateChanged handles UI update
+        })
+        .catch((error) => {
+            document.getElementById('login-error').innerText = "Invalid credentials or account does not exist.";
+            document.getElementById('login-error').style.display = 'block';
+        });
+};
+
+window.logoutUser = function () {
+    window.signOut(window.auth).then(() => {
+        console.log("User signed out.");
+    }).catch((error) => {
+        console.error("Sign out error", error);
+    });
+};
+
+// Listen for auth state changes immediately to toggle UI
+window.onload = function () {
+    // We must wait a brief moment for auth to be initialized from index.html
+    setTimeout(() => {
+        if (window.onAuthStateChanged && window.auth) {
+            window.onAuthStateChanged(window.auth, (user) => {
+                if (user) {
+                    // User is signed in. Hide login, show app.
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app-structure').style.display = 'flex';
+                } else {
+                    // No user is signed in. Show login, hide app.
+                    document.getElementById('login-screen').style.display = 'flex';
+                    document.getElementById('app-structure').style.display = 'none';
+                }
+            });
+        }
+    }, 500);
+};

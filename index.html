@@ -57,332 +57,385 @@
         </nav>
 
         <div class="sidebar-footer">
-            <!-- Footer removed per request -->
+            <button class="btn btn-danger" style="width:100%" onclick="logoutUser()">Logout</button>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <h2 id="page-title" class="page-title">Dashboard</h2>
-            <button class="btn btn-primary" onclick="openModal('invoiceModal')">+ New Invoice</button>
-        </header>
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="login-wrapper">
+        <div class="login-box">
+            <h1 class="logo" style="font-size: 28px; margin-bottom: 24px; text-align: center;">ANTIGRAVITY</h1>
+            <h2 style="font-size: 18px; margin-bottom: 8px; text-align: center;">Welcome Back</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px; font-size: 13px;">Sign in to
+                access your business suite.</p>
 
-        <!-- PAGE CONTAINER -->
-        <div class="page-container">
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Email Address</label>
+                <input type="email" id="login-email" class="input" placeholder="admin@example.com">
+            </div>
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label>Password</label>
+                <input type="password" id="login-password" class="input" placeholder="••••••••">
+            </div>
 
-            <!-- 1. DASHBOARD PAGE -->
-            <section id="page-dashboard" class="page active">
-                <div class="stat-grid">
-                    <div class="stat-card" style="border-top-color: var(--accent-green)">
-                        <div class="stat-label">Total Sales</div>
-                        <div class="stat-value" id="dash-sales">₹0</div>
-                        <div class="stat-trend">+12% vs last month</div>
-                    </div>
-                    <div class="stat-card" style="border-top-color: var(--accent-blue)">
-                        <div class="stat-label">Total Purchase</div>
-                        <div class="stat-value" id="dash-purchase">₹0</div>
-                        <div class="stat-trend">+5% vs last month</div>
-                    </div>
-                    <div class="stat-card" style="border-top-color: var(--warning-amber)">
-                        <div class="stat-label">Outstanding Receivable</div>
-                        <div class="stat-value" id="dash-receivable">₹0</div>
-                        <div class="stat-trend">Needs attention</div>
-                    </div>
-                    <div class="stat-card" style="border-top-color: var(--danger-red)">
-                        <div class="stat-label">Outstanding Payable</div>
-                        <div class="stat-value" id="dash-payable">₹0</div>
-                        <div class="stat-trend">Due in 7 days</div>
-                    </div>
-                </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 12px; margin-bottom: 16px;"
+                onclick="loginEmailPassword()">Sign In with Email</button>
 
-                <div class="two-col-grid">
-                    <div class="chart-container">
-                        <h3>Last 7 Days Sales</h3>
-                        <div class="bar-chart" id="sales-chart">
-                            <!-- Chart bars injected via JS -->
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <div style="height: 1px; background: var(--border); flex: 1;"></div>
+                <span
+                    style="font-size: 11px; color: var(--text-muted); margin: 0 12px; text-transform: uppercase;">Or</span>
+                <div style="height: 1px; background: var(--border); flex: 1;"></div>
+            </div>
+
+            <button class="btn"
+                style="width: 100%; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;"
+                onclick="loginGoogle()">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#4285F4"
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                    <path fill="#34A853"
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                    <path fill="#FBBC05"
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                    <path fill="#EA4335"
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    <path fill="none" d="M1 1h22v22H1z" />
+                </svg>
+                Sign In with Google
+            </button>
+            <p id="login-error"
+                style="color: var(--danger-red); font-size: 12px; text-align: center; margin-top: 16px; display:none;">
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN APP STRUCTURE -->
+    <div id="app-structure" style="display: none; width: 100%; height: 100%;">
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <h2 id="page-title" class="page-title">Dashboard</h2>
+                <button class="btn btn-primary" onclick="openModal('invoiceModal')">+ New Invoice</button>
+            </header>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+
+                <!-- 1. DASHBOARD PAGE -->
+                <section id="page-dashboard" class="page active">
+                    <div class="stat-grid">
+                        <div class="stat-card" style="border-top-color: var(--accent-green)">
+                            <div class="stat-label">Total Sales</div>
+                            <div class="stat-value" id="dash-sales">₹0</div>
+                            <div class="stat-trend">+12% vs last month</div>
+                        </div>
+                        <div class="stat-card" style="border-top-color: var(--accent-blue)">
+                            <div class="stat-label">Total Purchase</div>
+                            <div class="stat-value" id="dash-purchase">₹0</div>
+                            <div class="stat-trend">+5% vs last month</div>
+                        </div>
+                        <div class="stat-card" style="border-top-color: var(--warning-amber)">
+                            <div class="stat-label">Outstanding Receivable</div>
+                            <div class="stat-value" id="dash-receivable">₹0</div>
+                            <div class="stat-trend">Needs attention</div>
+                        </div>
+                        <div class="stat-card" style="border-top-color: var(--danger-red)">
+                            <div class="stat-label">Outstanding Payable</div>
+                            <div class="stat-value" id="dash-payable">₹0</div>
+                            <div class="stat-trend">Due in 7 days</div>
                         </div>
                     </div>
-                    <div class="quick-stats-container">
-                        <h3>Quick Stats</h3>
-                        <table class="quick-stats-table">
-                            <tr>
-                                <td>Invoices Today</td>
-                                <td id="stat-invoices-today">0</td>
-                            </tr>
-                            <tr>
-                                <td>Low Stock Items</td>
-                                <td id="stat-low-stock">0</td>
-                            </tr>
-                            <tr>
-                                <td>Active Parties</td>
-                                <td id="stat-active-parties">0</td>
-                            </tr>
-                            <tr>
-                                <td>GST Payable</td>
-                                <td id="stat-gst-payable">₹0</td>
-                            </tr>
-                            <tr>
-                                <td>Net Profit</td>
-                                <td id="stat-net-profit" style="color:var(--accent-green)">₹0</td>
-                            </tr>
+
+                    <div class="two-col-grid">
+                        <div class="chart-container">
+                            <h3>Last 7 Days Sales</h3>
+                            <div class="bar-chart" id="sales-chart">
+                                <!-- Chart bars injected via JS -->
+                            </div>
+                        </div>
+                        <div class="quick-stats-container">
+                            <h3>Quick Stats</h3>
+                            <table class="quick-stats-table">
+                                <tr>
+                                    <td>Invoices Today</td>
+                                    <td id="stat-invoices-today">0</td>
+                                </tr>
+                                <tr>
+                                    <td>Low Stock Items</td>
+                                    <td id="stat-low-stock">0</td>
+                                </tr>
+                                <tr>
+                                    <td>Active Parties</td>
+                                    <td id="stat-active-parties">0</td>
+                                </tr>
+                                <tr>
+                                    <td>GST Payable</td>
+                                    <td id="stat-gst-payable">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Net Profit</td>
+                                    <td id="stat-net-profit" style="color:var(--accent-green)">₹0</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="recent-txns">
+                        <h3>Recent Transactions</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Voucher No</th>
+                                    <th>Date</th>
+                                    <th>Party</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-tbody">
+                                <!-- Injected JS -->
+                            </tbody>
                         </table>
                     </div>
-                </div>
+                </section>
 
-                <div class="recent-txns">
-                    <h3>Recent Transactions</h3>
+                <!-- 2. SALES / INVOICE PAGE -->
+                <section id="page-sales" class="page">
+                    <div class="controls-bar">
+                        <div class="filter-group">
+                            <button class="btn active" onclick="filterSales('All', this)">All</button>
+                            <button class="btn" onclick="filterSales('Paid', this)">Paid</button>
+                            <button class="btn" onclick="filterSales('Unpaid', this)">Unpaid</button>
+                        </div>
+                        <div class="search-group">
+                            <input type="text" class="input" placeholder="Search invoices..."
+                                oninput="searchTable(this.value, 'sales-tbody')">
+                            <button class="btn btn-primary" onclick="openModal('invoiceModal')">+ New Invoice</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice No</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Subtotal</th>
+                                <th>GST</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-tbody"></tbody>
+                    </table>
+                </section>
+
+                <!-- 3. PURCHASE PAGE -->
+                <section id="page-purchase" class="page">
+                    <div class="controls-bar">
+                        <div class="search-group" style="margin-left:auto;">
+                            <input type="text" class="input" placeholder="Search bills..."
+                                oninput="searchTable(this.value, 'purchase-tbody')">
+                            <button class="btn btn-primary" onclick="openModal('purchaseModal')">+ New Purchase</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Bill No</th>
+                                <th>Date</th>
+                                <th>Supplier</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th>GST</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchase-tbody"></tbody>
+                    </table>
+                </section>
+
+                <!-- 4. CREDIT / DEBIT NOTE PAGE -->
+                <section id="page-notes" class="page">
+                    <div class="controls-bar">
+                        <div class="btn-group">
+                            <button class="btn" onclick="openNoteModal('Credit Note')">+ Credit Note</button>
+                            <button class="btn" onclick="openNoteModal('Debit Note')">+ Debit Note</button>
+                        </div>
+                        <input type="text" class="input" placeholder="Search notes..."
+                            oninput="searchTable(this.value, 'notes-tbody')">
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Note No</th>
+                                <th>Date</th>
+                                <th>Party</th>
+                                <th>Against Voucher</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notes-tbody"></tbody>
+                    </table>
+                </section>
+
+                <!-- 5. PAYMENTS PAGE -->
+                <section id="page-payments" class="page">
+                    <div class="controls-bar">
+                        <div class="btn-group">
+                            <button class="btn" onclick="openPaymentModal('Receipt')">+ Receipt</button>
+                            <button class="btn" onclick="openPaymentModal('Payment')">+ Payment</button>
+                        </div>
+                        <input type="text" class="input" placeholder="Search payments..."
+                            oninput="searchTable(this.value, 'payments-tbody')">
+                    </div>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Voucher No</th>
                                 <th>Date</th>
                                 <th>Party</th>
+                                <th>Mode</th>
                                 <th>Type</th>
                                 <th>Amount</th>
-                                <th>Status</th>
+                                <th>Reference</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="recent-tbody">
-                            <!-- Injected JS -->
-                        </tbody>
+                        <tbody id="payments-tbody"></tbody>
                     </table>
-                </div>
-            </section>
+                </section>
 
-            <!-- 2. SALES / INVOICE PAGE -->
-            <section id="page-sales" class="page">
-                <div class="controls-bar">
-                    <div class="filter-group">
-                        <button class="btn active" onclick="filterSales('All', this)">All</button>
-                        <button class="btn" onclick="filterSales('Paid', this)">Paid</button>
-                        <button class="btn" onclick="filterSales('Unpaid', this)">Unpaid</button>
+                <!-- 6. STOCK / INVENTORY PAGE -->
+                <section id="page-stock" class="page">
+                    <div class="controls-bar">
+                        <div class="search-group" style="margin-left:auto;">
+                            <input type="text" class="input" placeholder="Search items..."
+                                oninput="searchTable(this.value, 'stock-tbody')">
+                            <button class="btn btn-primary" onclick="openModal('itemModal')">+ Add Item</button>
+                        </div>
                     </div>
-                    <div class="search-group">
-                        <input type="text" class="input" placeholder="Search invoices..."
-                            oninput="searchTable(this.value, 'sales-tbody')">
-                        <button class="btn btn-primary" onclick="openModal('invoiceModal')">+ New Invoice</button>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Invoice No</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Items</th>
-                            <th>Subtotal</th>
-                            <th>GST</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sales-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 3. PURCHASE PAGE -->
-            <section id="page-purchase" class="page">
-                <div class="controls-bar">
-                    <div class="search-group" style="margin-left:auto;">
-                        <input type="text" class="input" placeholder="Search bills..."
-                            oninput="searchTable(this.value, 'purchase-tbody')">
-                        <button class="btn btn-primary" onclick="openModal('purchaseModal')">+ New Purchase</button>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Bill No</th>
-                            <th>Date</th>
-                            <th>Supplier</th>
-                            <th>Items</th>
-                            <th>Amount</th>
-                            <th>GST</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="purchase-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 4. CREDIT / DEBIT NOTE PAGE -->
-            <section id="page-notes" class="page">
-                <div class="controls-bar">
-                    <div class="btn-group">
-                        <button class="btn" onclick="openNoteModal('Credit Note')">+ Credit Note</button>
-                        <button class="btn" onclick="openNoteModal('Debit Note')">+ Debit Note</button>
-                    </div>
-                    <input type="text" class="input" placeholder="Search notes..."
-                        oninput="searchTable(this.value, 'notes-tbody')">
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Note No</th>
-                            <th>Date</th>
-                            <th>Party</th>
-                            <th>Against Voucher</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Reason</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="notes-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 5. PAYMENTS PAGE -->
-            <section id="page-payments" class="page">
-                <div class="controls-bar">
-                    <div class="btn-group">
-                        <button class="btn" onclick="openPaymentModal('Receipt')">+ Receipt</button>
-                        <button class="btn" onclick="openPaymentModal('Payment')">+ Payment</button>
-                    </div>
-                    <input type="text" class="input" placeholder="Search payments..."
-                        oninput="searchTable(this.value, 'payments-tbody')">
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Voucher No</th>
-                            <th>Date</th>
-                            <th>Party</th>
-                            <th>Mode</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Reference</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="payments-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 6. STOCK / INVENTORY PAGE -->
-            <section id="page-stock" class="page">
-                <div class="controls-bar">
-                    <div class="search-group" style="margin-left:auto;">
-                        <input type="text" class="input" placeholder="Search items..."
-                            oninput="searchTable(this.value, 'stock-tbody')">
-                        <button class="btn btn-primary" onclick="openModal('itemModal')">+ Add Item</button>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Item Code</th>
-                            <th>Item Name</th>
-                            <th>Category</th>
-                            <th>Unit</th>
-                            <th>Opening</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Closing</th>
-                            <th>Rate</th>
-                            <th>Value</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="stock-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 7. PARTIES / LEDGER PAGE -->
-            <section id="page-parties" class="page">
-                <div class="controls-bar">
-                    <div class="search-group" style="margin-left:auto;">
-                        <input type="text" class="input" placeholder="Search parties..."
-                            oninput="searchTable(this.value, 'parties-tbody')">
-                        <button class="btn btn-primary" onclick="openModal('partyModal')">+ Add Party</button>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Code</th>
-                            <th>Party Name</th>
-                            <th>Type</th>
-                            <th>Phone</th>
-                            <th>GSTIN</th>
-                            <th>Balance</th>
-                            <th>Cr Limit</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="parties-tbody"></tbody>
-                </table>
-            </section>
-
-            <!-- 8. REPORTS PAGE -->
-            <section id="page-reports" class="page">
-                <div class="reports-grid">
-                    <div class="report-card">
-                        <h3>Trial Balance</h3>
-                        <p>View balances of all ledgers</p>
-                    </div>
-                    <div class="report-card">
-                        <h3>P&L Statement</h3>
-                        <p>Comprehensive profit and loss</p>
-                    </div>
-                    <div class="report-card">
-                        <h3>GST Summary</h3>
-                        <p>Tax computation and summary</p>
-                    </div>
-                    <div class="report-card">
-                        <h3>Outstanding Report</h3>
-                        <p>Receivables & Payables aging</p>
-                    </div>
-                </div>
-
-                <div class="pl-statement mt-4">
-                    <h3>P&L Summary (Demo)</h3>
-                    <table class="data-table custom-pl-table">
-                        <tbody>
-                            <tr class="section-header">
-                                <td colspan="2">INCOME</td>
-                            </tr>
+                    <table class="data-table">
+                        <thead>
                             <tr>
-                                <td>Gross Sales</td>
-                                <td class="text-right" id="pl-gross-sales">₹0</td>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Unit</th>
+                                <th>Opening</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>Closing</th>
+                                <th>Rate</th>
+                                <th>Value</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
-                            <tr>
-                                <td>Returns</td>
-                                <td class="text-right danger-text">(₹0)</td>
-                            </tr>
-                            <tr class="font-bold">
-                                <td>Net Sales</td>
-                                <td class="text-right" id="pl-net-sales">₹0</td>
-                            </tr>
-                            <tr class="section-header">
-                                <td colspan="2">EXPENDITURE</td>
-                            </tr>
-                            <tr>
-                                <td>COGS (Cost of Goods Sold)</td>
-                                <td class="text-right" id="pl-cogs">₹0</td>
-                            </tr>
-                            <tr>
-                                <td>Operating Expenses</td>
-                                <td class="text-right" id="pl-opex">₹0</td>
-                            </tr>
-                            <tr class="font-bold accent-text">
-                                <td style="color:var(--accent-green)">Net Profit</td>
-                                <td class="text-right" id="pl-net" style="color:var(--accent-green)">₹0</td>
-                            </tr>
-                        </tbody>
+                        </thead>
+                        <tbody id="stock-tbody"></tbody>
                     </table>
-                </div>
-            </section>
+                </section>
 
-        </div>
-    </main>
+                <!-- 7. PARTIES / LEDGER PAGE -->
+                <section id="page-parties" class="page">
+                    <div class="controls-bar">
+                        <div class="search-group" style="margin-left:auto;">
+                            <input type="text" class="input" placeholder="Search parties..."
+                                oninput="searchTable(this.value, 'parties-tbody')">
+                            <button class="btn btn-primary" onclick="openModal('partyModal')">+ Add Party</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Party Name</th>
+                                <th>Type</th>
+                                <th>Phone</th>
+                                <th>GSTIN</th>
+                                <th>Balance</th>
+                                <th>Cr Limit</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="parties-tbody"></tbody>
+                    </table>
+                </section>
+
+                <!-- 8. REPORTS PAGE -->
+                <section id="page-reports" class="page">
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>Trial Balance</h3>
+                            <p>View balances of all ledgers</p>
+                        </div>
+                        <div class="report-card">
+                            <h3>P&L Statement</h3>
+                            <p>Comprehensive profit and loss</p>
+                        </div>
+                        <div class="report-card">
+                            <h3>GST Summary</h3>
+                            <p>Tax computation and summary</p>
+                        </div>
+                        <div class="report-card">
+                            <h3>Outstanding Report</h3>
+                            <p>Receivables & Payables aging</p>
+                        </div>
+                    </div>
+
+                    <div class="pl-statement mt-4">
+                        <h3>P&L Summary (Demo)</h3>
+                        <table class="data-table custom-pl-table">
+                            <tbody>
+                                <tr class="section-header">
+                                    <td colspan="2">INCOME</td>
+                                </tr>
+                                <tr>
+                                    <td>Gross Sales</td>
+                                    <td class="text-right" id="pl-gross-sales">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Returns</td>
+                                    <td class="text-right danger-text">(₹0)</td>
+                                </tr>
+                                <tr class="font-bold">
+                                    <td>Net Sales</td>
+                                    <td class="text-right" id="pl-net-sales">₹0</td>
+                                </tr>
+                                <tr class="section-header">
+                                    <td colspan="2">EXPENDITURE</td>
+                                </tr>
+                                <tr>
+                                    <td>COGS (Cost of Goods Sold)</td>
+                                    <td class="text-right" id="pl-cogs">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Operating Expenses</td>
+                                    <td class="text-right" id="pl-opex">₹0</td>
+                                </tr>
+                                <tr class="font-bold accent-text">
+                                    <td style="color:var(--accent-green)">Net Profit</td>
+                                    <td class="text-right" id="pl-net" style="color:var(--accent-green)">₹0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div> <!-- END APP STRUCTURE -->
 
     <!-- Overlay & Modals -->
     <div class="overlay" id="overlay">
@@ -453,10 +506,11 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer no-print">
                 <button class="btn" onclick="closeModal('invoiceModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="window.print()">Print Invoice</button>
                 <button class="btn btn-primary" onclick="saveInvoice('Unpaid')">Save Draft</button>
-                <button class="btn btn-primary" onclick="saveInvoice('Paid')">Save & Print</button>
+                <button class="btn btn-primary" onclick="saveInvoice('Paid')">Save & Close</button>
             </div>
         </div>
 
@@ -502,8 +556,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer no-print">
                 <button class="btn" onclick="closeModal('purchaseModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="window.print()">Print Bill</button>
                 <button class="btn btn-primary" onclick="savePurchase()">Save Purchase</button>
             </div>
         </div>
@@ -551,8 +606,9 @@
                     <textarea class="input" rows="2"></textarea>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer no-print">
                 <button class="btn" onclick="closeModal('noteModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="window.print()">Print Note</button>
                 <button class="btn btn-primary" onclick="saveNote()">Save Note</button>
             </div>
         </div>
@@ -600,8 +656,9 @@
                     <textarea class="input" rows="2"></textarea>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer no-print">
                 <button class="btn" onclick="closeModal('paymentModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="window.print()">Print Receipt</button>
                 <button class="btn btn-primary" onclick="savePayment()">Save Record</button>
             </div>
         </div>
@@ -721,6 +778,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { getDatabase } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCfLLfHSHiWEGrcwct9NdLk8hHS4V0DSEU",
@@ -732,7 +790,15 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        window.db = getDatabase(app); // make db globally available
+        window.db = getDatabase(app);
+        window.auth = getAuth(app);
+        window.googleProvider = new GoogleAuthProvider();
+
+        // Global functions for module access
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signInWithPopup = signInWithPopup;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
     </script>
     <script type="module" src="script-extensions.js?v=1.1"></script>
     <script type="module" src="script.js?v=1.1"></script>

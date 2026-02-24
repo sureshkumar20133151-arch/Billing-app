@@ -63,6 +63,26 @@ h6,
     background: var(--text-muted);
 }
 
+/* Login Screen */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--surface-hover);
+}
+
+.login-box {
+    background-color: var(--surface);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
 /* SIDEBAR */
 .sidebar {
     width: var(--sidebar-width);
@@ -731,4 +751,58 @@ select.input {
 
 .toast.show {
     bottom: 32px;
+}
+
+/* PRINTING STYLES */
+@media print {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .sidebar,
+    .topbar,
+    .controls-bar,
+    .no-print,
+    .close-btn {
+        display: none !important;
+    }
+
+    .overlay {
+        position: static;
+        background: transparent;
+        display: block !important;
+    }
+
+    .modal {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block !important;
+    }
+
+    .modal-body {
+        padding: 0;
+        overflow: visible;
+    }
+
+    #app-structure {
+        display: none !important;
+        /* Hide main app behind modal */
+    }
+
+    /* Additional layout tweaks for clean A4 printing */
+    .form-group input,
+    .form-group select {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        padding: 4px 0;
+    }
+
+    .item-row .input {
+        border: none;
+    }
 }
