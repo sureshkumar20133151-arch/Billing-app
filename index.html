@@ -718,8 +718,24 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast">Action completed successfully</div>
 
-    <script src="script-extensions.js"></script>
-    <script src="script.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfLLfHSHiWEGrcwct9NdLk8hHS4V0DSEU",
+            authDomain: "billing-dc0b2.firebaseapp.com",
+            projectId: "billing-dc0b2",
+            storageBucket: "billing-dc0b2.firebasestorage.app",
+            messagingSenderId: "693193969124",
+            appId: "1:693193969124:web:fbe1013d2e782f284e0bf1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.db = getDatabase(app); // make db globally available
+    </script>
+    <script type="module" src="script-extensions.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

@@ -1,34 +1,21 @@
+import { ref, remove } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
 // --- EDIT & DELETE LOGIC ---
-let editMode = { active: false, type: null, id: null };
+window.editMode = { active: false, type: null, id: null };
 
 function deleteRecord(type, id) {
     if (!confirm(`Are you sure you want to delete this record?`)) return;
 
-    if (type === 'sales') {
-        sales = sales.filter(s => s.no !== id);
-        recentTxns = recentTxns.filter(t => t.no !== id);
-        renderSales();
-    } else if (type === 'purchases') {
-        purchases = purchases.filter(p => p.no !== id);
-        recentTxns = recentTxns.filter(t => t.no !== id);
-        renderPurchase();
-    } else if (type === 'notes') {
-        notes = notes.filter(n => n.no !== id);
-        renderNotes();
-    } else if (type === 'payments') {
-        payments = payments.filter(p => p.no !== id);
-        renderPayments();
-    } else if (type === 'stock') {
-        stock = stock.filter(s => s.code !== id);
-        renderStock();
-    } else if (type === 'parties') {
-        parties = parties.filter(p => p.code !== id);
-        renderParties();
-    }
-
-    renderDashboard();
-    showToast(`Record ${id} deleted successfully`);
+    // id is now the firebase autogen key
+    let dbRef = ref(window.db, type + '/' + id);
+    remove(dbRef).then(() => {
+        showToast(`Record deleted successfully`);
+    }).catch(err => {
+        console.error(err);
+        showToast(`Error deleting record`);
+    });
 }
+window.deleteRecord = deleteRecord;
 
 function editRecord(type, id) {
     editMode = { active: true, type: type, id: id };
@@ -86,3 +73,4 @@ function editRecord(type, id) {
         showToast('Editing ' + type + ' works similarly (Demo)');
     }
 }
+window.editRecord = editRecord;
