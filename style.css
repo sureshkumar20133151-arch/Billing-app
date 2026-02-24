@@ -1,16 +1,16 @@
 :root {
-    /* Dark Industrial Theme Variables */
-    --bg-dark: #0a0b0e;
-    --surface: #111318;
-    --surface-hover: #1a1c23;
-    --border: #2a2e39;
+    /* Black & White Theme Variables */
+    --bg-dark: #f9f9f9;
+    --surface: #ffffff;
+    --surface-hover: #f3f4f6;
+    --border: #e5e7eb;
 
-    --accent-green: #00e5a0;
-    --accent-blue: #0ea5e9;
-    --danger-red: #ff4d6d;
-    --warning-amber: #f59e0b;
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
+    --accent-green: #000000;
+    --accent-blue: #000000;
+    --danger-red: #000000;
+    --warning-amber: #000000;
+    --text-primary: #111827;
+    --text-muted: #6b7280;
 
     --sidebar-width: 220px;
     --topbar-height: 70px;
@@ -378,15 +378,15 @@ h3 {
 
 .btn-primary {
     background-color: var(--accent-green);
-    color: #000;
+    color: #ffffff;
     border-color: var(--accent-green);
     font-weight: 600;
 }
 
 .btn-primary:hover {
-    background-color: #00c086;
-    border-color: #00c086;
-    color: #000;
+    background-color: #333333;
+    border-color: #333333;
+    color: #ffffff;
 }
 
 .btn-danger {
@@ -451,33 +451,33 @@ select.input {
 }
 
 .badge-green {
-    background-color: rgba(0, 229, 160, 0.1);
-    color: var(--accent-green);
-    border: 1px solid rgba(0, 229, 160, 0.2);
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
 }
 
 .badge-red {
-    background-color: rgba(255, 77, 109, 0.1);
-    color: var(--danger-red);
-    border: 1px solid rgba(255, 77, 109, 0.2);
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
 }
 
 .badge-blue {
-    background-color: rgba(14, 165, 233, 0.1);
-    color: var(--accent-blue);
-    border: 1px solid rgba(14, 165, 233, 0.2);
+    background-color: #f9f9f9;
+    color: #000000;
+    border: 1px dashed #000000;
 }
 
 .badge-amber {
-    background-color: rgba(245, 158, 11, 0.1);
-    color: var(--warning-amber);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    background-color: #f3f4f6;
+    color: #000000;
+    border: 1px solid #000000;
 }
 
 .badge-gray {
-    background-color: rgba(148, 163, 184, 0.1);
-    color: var(--text-muted);
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    background-color: #ffffff;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
 }
 
 /* REPORTS GRID */
@@ -630,7 +630,7 @@ select.input {
 
 .item-grid-header {
     padding: 12px 16px;
-    background-color: var(--bg-dark);
+    background-color: var(--surface-hover);
     font-size: 11px;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -681,7 +681,7 @@ select.input {
 
 /* TOTALS */
 .totals-calculation {
-    background-color: var(--bg-dark);
+    background-color: var(--surface-hover);
     padding: 16px;
     border-radius: 6px;
     border: 1px solid var(--border);
@@ -717,8 +717,8 @@ select.input {
     position: fixed;
     bottom: -60px;
     right: 32px;
-    background-color: var(--surface);
-    color: var(--text-primary);
+    background-color: var(--text-primary);
+    color: var(--surface);
     padding: 16px 24px;
     border-radius: 4px;
     border-left: 4px solid var(--accent-green);
